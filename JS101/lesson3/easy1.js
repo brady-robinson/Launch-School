@@ -63,9 +63,16 @@
 // console.log(str2.includes('Dino'));
 
 
-let flintstones = ["Fred", "Barney", "Wilma", "Betty", "Bambam", "Pebbles"];
-flintstones.push("Dino");
-console.log(flintstones)
+// let flintstones = ["Fred", "Barney", "Wilma", "Betty", "Bambam", "Pebbles"];
+// flintstones.push("Dino", "Hoppy");
+// console.log(flintstones)
+
+
+let advice = "Few things in life are as important as house training your pet dinosaur.";
+indexH = advice.indexOf('house')
+advice = advice.slice(0, indexH - 1)
+console.log(advice)
+
 
 
 
