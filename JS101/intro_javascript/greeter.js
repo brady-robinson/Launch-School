@@ -1,5 +1,5 @@
-let name = 'Victor';
+let rlSync = require('readline-sync');
 
-console.log(`Good Morning, ${name}.`)
-console.log(`Good Afternoon, ${name}.`)
-console.log(`Good Evening, ${name}.`)
+let name1 = rlSync.question("What is your first name? ");
+let name2 = rlSync.question("What is your last name? ");
+console.log(`Hello, ${name1 + " " + name2}!`);
