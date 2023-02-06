@@ -1,5 +1,9 @@
 let rlSync = require('readline-sync');
 
-let name1 = rlSync.question("What is your first name? ");
-let name2 = rlSync.question("What is your last name? ");
+function greet(prompt, funct) {
+  return funct.question(prompt);
+}
+
+let name1 = greet("What is your first name? ", rlSync);
+let name2 = greet("What is your last name? ", rlSync);
 console.log(`Hello, ${name1 + " " + name2}!`);
