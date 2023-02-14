@@ -52,12 +52,68 @@
 // }
 
 
-console.log(/o/.test('bobcat'));
-console.log(/l/.test('bobcat'));
+// console.log(/o/.test('bobcat'));
+// console.log(/l/.test('bobcat'));
 
-console.log("bobcat".match(/x/));
-console.log("bobcat".match(/[bct]/g));
-console.log("bobcat".match(/b((o)b)/));
+// console.log("bobcat".match(/x/));
+// console.log("bobcat".match(/[bct]/g));
+// console.log("bobcat".match(/b((o)b)/));
 
+
+// let names = ['bob', 'joe', 'steve', undefined, 'frank'];
+
+// names.forEach(name => {
+//   try {
+//     console.log(name.length);
+//   } catch (TypeError) {
+//     console.log("Whoops! Error");
+//   }
+// })
+
+
+// console.log(Math.sqrt(37))
+// console.log(Math.max(1, 6, 3, 2))
+
+
+// let words = [
+//   'laboratory',
+//   'experiment',
+//   'flab',
+//   'Pans Labyrinth',
+//   'elaborate',
+//   'polar bear',
+// ];
+
+
+// function allMatches(inputString, inputRegEx) {
+//   let output_array = [];
+//   inputString.forEach(function(el) {
+//     if (inputRegEx.test(el)) {
+//       output_array.push(el);
+//     }
+//   })
+//   return output_array;
+// }
+
+// console.log(allMatches(words, /lab/)); // => ['laboratory', 'flab', 'elaborate']
+
+// function isNan(num) {
+//   if (typeof num !== 'number') return false;
+
+//   if (num > 0 || num < 0 || num == 0) {
+//     return false;
+//   }
+
+//   return true;
+// }
+
+// console.log(isNan(NaN));
+// console.log(isNan(1));
+// console.log(isNan('hello'));
+
+
+function isNegZero(num) {
+  if 
+}
 
 
