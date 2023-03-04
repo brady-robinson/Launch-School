@@ -125,42 +125,42 @@
 
 // CODE
 
-function makeSequence(rowNumber) {
-  let integerElement = 2;
-  let elementPerRow = 1;
-  let outerArr = [];
+// function makeSequence(rowNumber) {
+//   let integerElement = 2;
+//   let elementPerRow = 1;
+//   let outerArr = [];
 
-  for (let counter = 0; counter < rowNumber; counter++) {
-    let subArray = [];
-    for (let counter2 = 0; counter2 < elementPerRow; counter2++) {
-      subArray.push(integerElement);
-      integerElement += 2;
-    }
-    outerArr.push(subArray);
-    elementPerRow += 1;
-  }
-  return outerArr;
-}
+//   for (let counter = 0; counter < rowNumber; counter++) {
+//     let subArray = [];
+//     for (let counter2 = 0; counter2 < elementPerRow; counter2++) {
+//       subArray.push(integerElement);
+//       integerElement += 2;
+//     }
+//     outerArr.push(subArray);
+//     elementPerRow += 1;
+//   }
+//   return outerArr;
+// }
 
-function sumRow(rowNumber, sequence) {
-  let rowIndex = rowNumber - 1;
-  let row = sequence[rowIndex];
-  let sum = 0;
+// function sumRow(rowNumber, sequence) {
+//   let rowIndex = rowNumber - 1;
+//   let row = sequence[rowIndex];
+//   let sum = 0;
 
-  for (let counter = 0; counter < row.length; counter++) {
-    sum = sum + row[counter];
-  }
+//   for (let counter = 0; counter < row.length; counter++) {
+//     sum = sum + row[counter];
+//   }
 
-  return sum;
-}
+//   return sum;
+// }
 
-function sumSequenceRow(rowNumber) {
-  let sequence = makeSequence(rowNumber);
-  let sum = sumRow(rowNumber, sequence);
-  return sum
-}
+// function sumSequenceRow(rowNumber) {
+//   let sequence = makeSequence(rowNumber);
+//   let sum = sumRow(rowNumber, sequence);
+//   return sum
+// }
 
-console.log(sumSequenceRow(4));
+// console.log(sumSequenceRow(4));
 
 
 
@@ -236,6 +236,23 @@ console.log(sumSequenceRow(4));
 // console.log(substringPalindromes("rollo"));
 
 
+// Leftover Blocks
+
+// You have a number of building blocks that can be used to build a valid structure. 
+//There are certain rules about what determines the validity of a structure:
+
+// The building blocks are cubes
+// The structure is built in layers
+// The top layer is a single block
+// A block in an upper layer must be supported by four blocks in a lower layer
+// A block in a lower layer can support more than one block in an upper layer
+// You cannot leave gaps between blocks
+
+// Write a program that, given the number for a specific amount of cubes, 
+// calculates the number of blocks left over after building the tallest possible valid structure.
+
+-  one block on top layer 
+- four blocks under each block
 
 
 
