@@ -50,6 +50,25 @@
 
 // console.log(justVeggies);
 
-console.log([1, 2, 3].map(num => num * 2));
+// console.log([1, 2, 3].map(num => num * 2));
+// console.log([1, 2, 3].map(num => num === 1));
 
+// console.log([1, 2, 3].map(function(num) {
+//   num * 1;
+// }));
+
+// console.log("hello".split("").filter(function(letter) {
+//   if("aeiouAEIOU".includes(letter)) {
+//     return letter;
+//   }
+// }).join(""));
+
+// console.log("hello".split("").map(function(letter) {
+//   return letter + letter;
+// }).join(""));
+
+
+[1, 2, 3].some(function(num) {
+  num > 2;
+});
 
