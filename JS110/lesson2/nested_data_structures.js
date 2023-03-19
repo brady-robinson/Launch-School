@@ -47,16 +47,18 @@
 // console.log(deepCopiedArr);
 
 
-let obj = Object.freeze({a: 'foo'});
-let obj1 = Object.freeze([1, 2, 3]);
+// let obj = Object.freeze({a: 'foo'});
+// let obj1 = Object.freeze([1, 2, 3]);
 
-obj.b = 'bar'
-console.log(obj)
+// obj.b = 'bar'
+// console.log(obj)
 
-obj1[3] = 9;
-console.log(obj1);
+// obj1[3] = 9;
+// console.log(obj1);
 
-console.log(Object.isFrozen(obj));
+// console.log(Object.isFrozen(obj));
 
-
+let arr = Object.freeze([[2]]);
+arr[0][1] = 9;
+console.log(arr);
 
