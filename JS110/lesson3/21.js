@@ -131,6 +131,6 @@ while (true) {
   resetGame();
 }
 
-
+console.log('test')
 
 
