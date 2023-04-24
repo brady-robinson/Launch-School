@@ -192,8 +192,51 @@ function fiveConsecutive(inpArr, startIndex) {
 // returns the two numbers that are closest together in
 // value.
 
+// input: array
+// output: array
+// Will array always have more than one element?
+// How do we handle two of the same number?
+
+// algorithm:
+
+// initialize the DIFF variable
+// initialize the outputArr to save the two output numbers
+// FOR EACH element of the INPUT ARRAY
+// FOR EACH element again, compare element by element
+// IF the two elements equal each other, CONTINUE to next iteration
+// ELSE if it is the first iteration, save the difference
+// ELSE if not first iteration, calculate difference
+// IF difference is smaller than DIFF, then update DIFF and overwrite outputARR
+
+function closestNumbers(inpArr) {
+  let diff = "";
+  let outputArr = [];
+
+  inpArr.forEach((num) => {
+    inpArr.forEach((compNum) => {
+      if (num === compNum) {
+        continue;
+      } else if (diff == "") {
+        diff = Math.abs(num - compNum);
+        outputArr = [num, compNum]
+      } else {
+        let tempDiff = Math.abs(num - compNum);
+        if (tempDiff < diff) {
+          diff = tempDiff;
+          outputArr = [num, compNum];
+        }
+      }
+    })
+  })
+  return outputArr;
+}
+
 // Examples:
 
 console.log(closestNumbers([5, 25, 15, 11, 20]));     // [15, 11]
 console.log(closestNumbers([19, 25, 32, 4, 27, 16])); // [25, 27]
 console.log(closestNumbers([12, 7, 17]));             // [12, 7]
+
+
+
+
