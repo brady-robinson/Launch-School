@@ -40,6 +40,7 @@ function createPlayer() {
   return {
     move: null,
     score: 0,
+    moveHistory: [],
   };
 }
 
@@ -58,6 +59,8 @@ const RPSGame = {
   displayRoundWinner() {
     let humanMove = this.human.move;
     let computerMove = this.computer.move;
+    this.human.moveHistory.push(humanMove);
+    this.computer.moveHistory.push(computerMove);
 
     console.log(`You chose: ${this.human.move}`);
     console.log(`The computer chose: ${this.computer.move}`);
@@ -94,6 +97,11 @@ const RPSGame = {
     console.log((this.human.score === 3) ? "You won the match!" : "The computer won the match!");
   },
 
+  displayMoves() {
+    console.log(`You have made these moves: ${this.human.moveHistory}.`);
+    console.log(`The computer has made these moves: ${this.computer.moveHistory}.`);
+  },
+
   play() {
     this.displayWelcomeMessage();
     while (true) {
@@ -102,6 +110,7 @@ const RPSGame = {
         this.computer.choose();
         this.displayRoundWinner();
         this.displayScores();
+        this.displayMoves();
       }
       this.displayMatchWinner();
       if (!this.playAgain()) break;
