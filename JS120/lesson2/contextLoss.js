@@ -284,19 +284,49 @@
 // console.log(foo.a)
 
 
-let foo = {
-  a: 0,
-  incrementA: function() {
-    function increment() {
-      this.a += 1;
-    }
+// let foo = {
+//   a: 0,
+//   incrementA: function() {
+//     function increment() {
+//       this.a += 1;
+//     }
 
-    increment();
-  }
+//     increment();
+//   }
+// };
+
+// foo.incrementA();
+// foo.incrementA();
+// foo.incrementA();
+
+// console.log(foo.a)
+
+
+// let foo = {
+//   bar: 42,
+//   qux() {
+//     console.log("Pudding");
+//   },
+// };
+
+// let baz = Object.create(foo);
+// baz.qux()
+
+
+// global.foo = 5;
+// if (isFinite(foo)) {
+//   let bar = 3;
+//   xyz = 5;
+//   console.log(bar);
+// }
+
+// console.log(global);
+
+
+let obj = {
+  foo() {
+    return this;
+  },
 };
 
-foo.incrementA();
-foo.incrementA();
-foo.incrementA();
-
-console.log(foo.a)
+console.log(obj.foo());
