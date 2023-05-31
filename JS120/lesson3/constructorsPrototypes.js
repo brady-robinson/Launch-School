@@ -2,7 +2,16 @@ function Dog(name, breed, weight) {
   this.name = name;
   this.breed = breed;
   this.weight = weight;
+  Dog.allDogs.push(this);
 }
+
+Dog.allDogs = [];
+
+Dog.showSpecies = function() {
+  console.log(`Dogs belong to the species ${Dog.species}`)
+}
+
+Dog.species = "Canis lupus";
 
 Dog.prototype.bark = function() {
   console.log(this.weight > 20 ? 'Woof!' : 'Yip!');
@@ -37,3 +46,7 @@ dexter.bark = function() {
 
 dexter.bark();
 maxi.bark();
+console.log(Dog.species);
+console.log(dexter.species);
+console.log(Dog.allDogs)
+Dog.showSpecies()
