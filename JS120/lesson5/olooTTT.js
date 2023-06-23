@@ -131,23 +131,46 @@ let TTTGame = {
   play() {
     console.clear();
     this.displayWelcomeMessage();
+    let playAgain = "y";
 
-    while (true) {
-      this.board.display();
+    while (playAgain === "y") {
 
-      this.humanMoves();
-      if (this.gameOver()) break;
+      while (true) {
+        this.board.display();
 
-      this.computerMoves();
-      if (this.gameOver()) break;
+        this.humanMoves();
+        if (this.gameOver()) break;
+
+        this.computerMoves();
+        if (this.gameOver()) break;
+
+        console.clear();
+      }
 
       console.clear();
+      this.board.display();
+      this.displayResults();
+      playAgain = this.playAgain();
+
     }
 
-    console.clear();
-    this.board.display();
-    this.displayResults();
     this.displayGoodbyeMessage();
+  },
+
+  playAgain() {
+    let playChoice;
+
+    while (true) {
+      playChoice = readline.question("Do you want to play again? (y/n)").toLowerCase();
+      if (["y", "n"].includes(playChoice)) break;
+      console.log("Invalid choice.")
+      console.log("");
+    }
+    console.clear();
+    this.board = Object.create(Board).init();
+    this.human = Object.create(Human).init();
+    this.computer = Object.create(Computer).init();
+    return playChoice;
   },
 
   displayResults() {
@@ -166,12 +189,37 @@ let TTTGame = {
     });
   },
 
+  joinOr(items, sep="", conj="or") {
+    let outputString = "";
+    let counter = 0;
+
+    items.forEach(item => {
+      if (counter === items.length - 2) {
+        outputString += String(item);
+        outputString += sep;
+        outputString += " "
+        outputString += conj;
+        outputString += " "
+      } else if (counter === items.length - 1) {
+        outputString += String(item);
+      } else {
+        outputString += String(item);
+        outputString += sep;
+        outputString += " "
+      }
+
+      counter += 1;
+    });
+
+    return outputString;
+  },
+
   humanMoves() {
     let choice;
 
     while (true) {
       let validChoices = this.board.unusedSquares();
-      const prompt = `Choose a square from (${validChoices.join(", ")})`;
+      const prompt = `Choose a square from (${this.joinOr(validChoices,",","or")})`;
       choice = readline.question(prompt)
       if (validChoices.includes(choice)) break;
 
