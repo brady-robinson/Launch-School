@@ -15,22 +15,23 @@ function Deck() {
     "Queen", "Queen", "Queen", "Queen",
     "King", "King", "King", "King",
     "Ace", "Ace", "Ace", "Ace"];
-
-  this.cardValues = {
-    2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10,
-    Jack:10, Queen:10, King:10,Ace:11};
 }
+
+Deck.prototype.removeDealtCard = function(index) {
+  return this.cards.splice(index,1)[0];
+};
 
 Deck.prototype.getDeck = function() {
   return this.cards;
 };
 
+Deck.prototype.getLength = function() {
+  return this.cards.length;
+};
+
 Deck.prototype.getValues = function() {
   return this.cardValues;
 };
-
-Deck.TWENTY_ONE = 21;
-Deck.DEALER_STOP = 17;
 
 function Participant() {
   this.hand = [];
@@ -40,17 +41,28 @@ Participant.prototype.getHand = function() {
   return this.hand;
 };
 
-Participant.prototype.score = function(cardValues) {
+Participant.prototype.getHandLength = function() {
+  return this.hand.length;
+};
+
+Participant.prototype.getCardAt = function(index) {
+  return this.hand[index];
+};
+
+Participant.prototype.score = function() {
+  let cardValues = {
+    2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10,
+    Jack:10, Queen:10, King:10,Ace:11};
   let sumCards = 0;
   let currentCard;
 
-  for (let index = 0; index < this.getHand().length; ++index) {
-    currentCard = this.getHand()[index];
+  for (let index = 0; index < this.getHandLength(); ++index) {
+    currentCard = this.getCardAt(index);
     sumCards += cardValues[currentCard];
   }
 
-  for (let index = 0; index < this.getHand().length; ++index) {
-    if (this.getHand()[index] === 'Ace' && sumCards > Deck.TWENTY_ONE) {
+  for (let index = 0; index < this.getHandLength(); ++index) {
+    if (this.getCardAt(index) === 'Ace' && sumCards > TwentyOneGame.TWENTY_ONE) {
       sumCards -= 10;
     }
   }
@@ -58,10 +70,14 @@ Participant.prototype.score = function(cardValues) {
   return sumCards;
 };
 
-Participant.prototype.isBusted = function(cardValues) {
-  let sumCards = this.score(cardValues);
+Participant.prototype.addCard = function(card) {
+  this.hand.push(card);
+};
 
-  return sumCards > Deck.TWENTY_ONE;
+Participant.prototype.isBusted = function() {
+  let sumCards = this.score();
+
+  return sumCards > TwentyOneGame.TWENTY_ONE;
 };
 
 Participant.prototype.hit = function(deck) {
@@ -84,11 +100,22 @@ function Dealer() {
 Dealer.prototype = Object.create(Participant.prototype);
 Dealer.prototype.constructor = Dealer;
 
+Dealer.prototype.getFaceUpCard = function() {
+  return this.hand[0];
+};
+
 function TwentyOneGame() {
   this.deck = new Deck();
   this.player = new Player();
   this.dealer = new Dealer();
 }
+
+TwentyOneGame.TWENTY_ONE = 21;
+TwentyOneGame.DEALER_STOP = 17;
+
+TwentyOneGame.prototype.getDeck = function() {
+  return this.deck.getDeck();
+};
 
 TwentyOneGame.prototype.start = function() {
   this.displayWelcomeMessage();
@@ -106,13 +133,13 @@ TwentyOneGame.prototype.dealCards = function() {
   let dealerCardIndex;
   let dealerCard;
   for (let index = 0; index <= 1; ++index) {
-    playerCardIndex = Math.floor(Math.random() * this.deck.getDeck().length);
-    playerCard = this.deck.getDeck().splice(playerCardIndex,1)[0];
-    this.player.getHand().push(playerCard);
+    playerCardIndex = Math.floor(Math.random() * this.deck.getLength());
+    playerCard = this.deck.removeDealtCard(playerCardIndex);
+    this.player.addCard(playerCard);
 
-    dealerCardIndex = Math.floor(Math.random() * this.deck.getDeck().length);
-    dealerCard = this.deck.getDeck().splice(dealerCardIndex,1)[0];
-    this.dealer.getHand().push(dealerCard);
+    dealerCardIndex = Math.floor(Math.random() * this.deck.getLength());
+    dealerCard = this.deck.removeDealtCard(dealerCardIndex);
+    this.dealer.addCard(dealerCard);
   }
 };
 
@@ -120,16 +147,16 @@ TwentyOneGame.prototype.showCards = function(all = false) {
   if (all) {
     console.log(" ");
     console.log(`Player cards: ${this.player.getHand()}`);
-    console.log(`Player score: ${this.player.score(this.deck.getValues())}`);
+    console.log(`Player score: ${this.player.score()}`);
     console.log(" ");
     console.log(`Dealer cards: ${this.dealer.getHand()}`);
     console.log(" ");
   } else {
     console.log(" ");
     console.log(`Player cards: ${this.player.getHand()}`);
-    console.log(`Player score: ${this.player.score(this.deck.getValues())}`);
+    console.log(`Player score: ${this.player.score()}`);
     console.log(" ");
-    console.log(`Dealer cards: ${this.dealer.getHand()[0]}`);
+    console.log(`Dealer cards: ${this.dealer.getFaceUpCard()}`);
     console.log(" ");
   }
 };
@@ -146,9 +173,9 @@ TwentyOneGame.prototype.playerTurn = function() {
       break;
     } else if (choice === "h") {
       console.clear();
-      this.player.hit(this.deck.getDeck());
+      this.player.hit(this.getDeck());
       this.showCards();
-      if (this.player.isBusted(this.deck.getValues())) {
+      if (this.player.isBusted()) {
         console.log("Player busted!");
         break;
       }
@@ -157,10 +184,10 @@ TwentyOneGame.prototype.playerTurn = function() {
 };
 
 TwentyOneGame.prototype.dealerTurn = function() {
-  if (this.player.score(this.deck.getValues()) > Deck.TWENTY_ONE) return false;
-  while (this.dealer.score(this.deck.getValues()) < Deck.DEALER_STOP) {
-    this.dealer.hit(this.deck.getDeck());
-    if (this.dealer.isBusted(this.deck.getValues())) {
+  if (this.player.score() > TwentyOneGame.TWENTY_ONE) return false;
+  while (this.dealer.score() < TwentyOneGame.DEALER_STOP) {
+    this.dealer.hit(this.getDeck());
+    if (this.dealer.isBusted()) {
       console.log("Dealer busted!");
       break;
     }
@@ -181,11 +208,11 @@ TwentyOneGame.prototype.displayGoodbyeMessage = function() {
 };
 
 TwentyOneGame.prototype.displayResult = function() {
-  let playerScore = this.player.score(this.deck.getValues());
-  let dealerScore = this.dealer.score(this.deck.getValues());
+  let playerScore = this.player.score();
+  let dealerScore = this.dealer.score();
 
-  if (playerScore > Deck.TWENTY_ONE) return console.log("Dealer wins!");
-  if (dealerScore > Deck.TWENTY_ONE) return console.log("Player wins!");
+  if (playerScore > TwentyOneGame.TWENTY_ONE) return console.log("Dealer wins!");
+  if (dealerScore > TwentyOneGame.TWENTY_ONE) return console.log("Player wins!");
 
   if (playerScore > dealerScore) {
     console.log("Player wins!");
